@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "644070587896",
+    "project_id": "futureacademy-38b54",
+    "storage_bucket": "futureacademy-38b54.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644070587896:android:5f30430542b33f36d9aa0d",
+        "android_client_info": {
+          "package_name": "com.android.futureacademy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644070587896-kksof2j0jpe5scl5df49ipuvsn9s75tt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUKw44Lf3ihxVhde2vXcBs1EsYEaKo6Uk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644070587896-kksof2j0jpe5scl5df49ipuvsn9s75tt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
