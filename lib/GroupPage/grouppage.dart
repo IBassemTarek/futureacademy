@@ -28,7 +28,7 @@ class GroupPage extends StatelessWidget {
   late String _captainNumber = group.captainNumber;
   late String _selectedSport = departmentName[group.department];
 
-  bool checkIfSame(String selectedSport) {
+  bool checkIfSame() {
     return (_groupName == '' || _captainName == '' || _captainNumber == '');
   }
 
@@ -50,7 +50,7 @@ class GroupPage extends StatelessWidget {
           );
         },
         title2: 'طلاب المجموعة',
-        disable: checkIfSame(_selectedSport),
+        disable: checkIfSame(),
         onTap: () async {
           GroupsDataBaseServices().updategroupInfo(
             dates: _groupDates,
@@ -277,7 +277,45 @@ class GroupPage extends StatelessWidget {
                               );
                             },
                           ),
-                        )
+                        ),
+                        SizedBox(
+                          height: _height * 0.03,
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            await GroupsDataBaseServices().startNewMonth(
+                              groupid: group.id,
+                            );
+                            await StudentsDataBaseServices()
+                                .studentsGroupNewMonth(
+                              groupId: group.id,
+                            );
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text('تم إعادة تهيئة المجموعة'),
+                            ));
+                          },
+                          child: Container(
+                            alignment: Alignment.topCenter,
+                            width: _width / 0.7,
+                            padding: EdgeInsets.symmetric(
+                              vertical: _width * 0.03,
+                            ),
+                            decoration: const BoxDecoration(
+                              color: kGradColor2,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                            ),
+                            child: Text(
+                              "بداية شهر جديد",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  ?.copyWith(color: kBackgroundColor),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),

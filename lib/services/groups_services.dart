@@ -74,7 +74,6 @@ class GroupsDataBaseServices {
       required BuildContext context}) async {
     return await groupsCard.doc(id).update({
       'StudentsID': studentsID,
-      'id': id,
     }).then((value) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("تم إضافة مستخدم إلي المجموعة"),
@@ -102,6 +101,20 @@ class GroupsDataBaseServices {
         .then((value) => print("groups added"))
         // ignore: avoid_print
         .catchError((error) => print("Failed to add groups: $error"));
+  }
+
+  Future startNewMonth({
+    required String groupid,
+  }) async {
+    return await groupsCard
+        .doc(groupid)
+        .update({
+          "dates": [],
+        })
+        // ignore: avoid_print
+        .then((value) => print("groups dates resets"))
+        // ignore: avoid_print
+        .catchError((error) => print("Failed to reset groups dates: $error"));
   }
 
   Future<void> deletegroups(String id) {

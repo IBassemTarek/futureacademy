@@ -4,6 +4,7 @@ class CustomTextField extends StatelessWidget {
   final String lableText;
   final String hintText;
   String? initialValue;
+  bool multiline = false;
   TextInputType? textInputType = TextInputType.text;
   final Function(String?) onClick;
 
@@ -12,6 +13,7 @@ class CustomTextField extends StatelessWidget {
     required this.onClick,
     required this.hintText,
     this.initialValue,
+    this.multiline = false,
     this.textInputType,
     required this.lableText,
   });
@@ -39,6 +41,7 @@ class CustomTextField extends StatelessWidget {
       },
       initialValue: initialValue ?? "",
       onChanged: onClick,
+      maxLines: multiline ? 5 : 1,
       keyboardType: textInputType,
       style: Theme.of(context)
           .textTheme

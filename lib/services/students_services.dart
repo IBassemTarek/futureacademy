@@ -86,27 +86,21 @@ class StudentsDataBaseServices {
     return studentsCard.snapshots().map(_studentsModelListSnapShot);
   }
 
-  Future updategroupInfo(
+  Future updateStudentInfo(
       {required String address,
-      required int age,
-      required List attHistory,
-      required int currentMonthAtt,
-      required int evaluation,
-      required String group,
-      required String mobileNumber,
       required String uid,
       required String name,
-      required List notes,
+      required String mobileNumber,
+      required int age,
+      required int evaluation,
+      required String group,
       required BuildContext context}) async {
     return await studentsCard.doc(uid).update({
       'id': uid,
-      'mobileNumber': mobileNumber,
       'name': name,
-      'notes': notes,
       'address': address,
+      'mobileNumber': mobileNumber,
       'age': age,
-      'attHistory': attHistory,
-      'currentMonthAtt': currentMonthAtt,
       'evaluation': evaluation,
       'group': group,
     }).then((value) {
@@ -168,6 +162,22 @@ class StudentsDataBaseServices {
     return temp;
   }
 
+  Future studentsGroupNewMonth({
+    required String groupId,
+  }) async {
+    await studentsCard
+        .where('group', isEqualTo: groupId)
+        .get()
+        .then((snapshots) async => {
+              for (var doc in snapshots.docs)
+                {
+                  await doc.reference.update({
+                    'currentMonthAtt': 0,
+                  })
+                }
+            });
+  }
+
   Future<void> deleteUserData({required String uid}) {
     return studentsCard
         .doc(uid)
@@ -176,5 +186,25 @@ class StudentsDataBaseServices {
         .then((value) => print("groups Deleted"))
         // ignore: avoid_print
         .catchError((error) => print("Failed to delete groups: $error"));
+  }
+
+  Future addStudentNote(
+      {required String uid,
+      required List notes,
+      required BuildContext context}) async {
+    return await studentsCard.doc(uid).update({
+      'id': uid,
+      'notes': notes,
+    }).then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("note added"),
+      ));
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Failed to add note: $error"),
+      ));
+      // ignore: avoid_print
+      print("Failed to add note: $error");
+    });
   }
 }

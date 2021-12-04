@@ -41,19 +41,41 @@ class AttendeesPage extends StatelessWidget {
                   builder: (context, setState) => ButtomAction(
                     buttonType: ButtonType.big,
                     disable: false,
-                    onTap: () {
+                    onTap: () async {
                       // activeStudents.isEmpty ? print('why ') : print('oh on ');
                       // print(activeStudents);
-                      // ignore: avoid_print
-                      print(snapshot.data!
-                          .firstWhere(
-                              (element) => element.id == 'duaPNUeSpl9uigDBoEFP')
-                          .attHistory);
-                      // ignore: avoid_print
-                      print(snapshot.data!
-                          .firstWhere(
-                              (element) => element.id == 'duaPNUeSpl9uigDBoEFP')
-                          .currentMonthAtt);
+                      if (activeStudents.isNotEmpty) {
+                        for (var element in activeStudents) {
+                          List newAttHistory = snapshot.data!
+                              .firstWhere((x) => x.id == element)
+                              .attHistory;
+                          if (!newAttHistory.contains(date)) {
+                            newAttHistory.add(date);
+                            // ignore: avoid_print
+                            print(newAttHistory);
+                            int newMonthAtt = snapshot.data!
+                                .firstWhere((x) => x.id == element)
+                                .currentMonthAtt;
+                            newMonthAtt++;
+                            // ignore: avoid_print
+                            print(newMonthAtt);
+                            await StudentsDataBaseServices().addNewSession(
+                              attHistory: newAttHistory,
+                              context: context,
+                              currentMonthAtt: newMonthAtt,
+                              uid: element,
+                            );
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          } else {
+                            // ignore: avoid_print
+                            print('already added');
+                          }
+                        }
+                      } else {
+                        // ignore: avoid_print
+                        print('empty');
+                      }
                     },
                     title: "تأكيد",
                   ),

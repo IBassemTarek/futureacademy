@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:futureacademy/AddNewStudent/add_new_student.dart';
 import 'package:futureacademy/AttendeesPage/attendees_page.dart';
+import 'package:futureacademy/EditStudentPage/edit_student_page.dart';
 import 'package:futureacademy/Models/group_model.dart';
 import 'package:futureacademy/Models/student_model.dart';
 import 'package:futureacademy/Shared/buttom_double_action.dart';
 import 'package:futureacademy/Shared/loading.dart';
 import 'package:futureacademy/Shared/small_appbar.dart';
+import 'package:futureacademy/services/groups_services.dart';
 import 'package:futureacademy/services/students_services.dart';
+import 'package:provider/provider.dart';
 
 import '../const.dart';
 import 'session_picker.dart';
@@ -89,7 +92,27 @@ class StudentPage extends StatelessWidget {
                             shrinkWrap: true,
                             itemBuilder: (context, i) {
                               return InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MultiProvider(
+                                        providers: [
+                                          StreamProvider<
+                                              List<GroupsModel>>.value(
+                                            value: GroupsDataBaseServices()
+                                                .groupsCardsData,
+                                            initialData: const [],
+                                          ),
+                                        ],
+                                        child: EditStudentPage(
+                                          groupid: group.id,
+                                          studentData: snapshot.data![i],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
                                 child: Container(
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(

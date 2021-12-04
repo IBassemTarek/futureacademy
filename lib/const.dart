@@ -39,6 +39,13 @@ const List<String> departmentName = [
   "كرة يد",
 ];
 
+const List<String> evaluationGrade = [
+  'ممتاز',
+  "جيد جدا",
+  "جيد",
+  "مقبول",
+];
+
 const List<String> daysNames = [
   'الاِثْنَيْن',
   "الثُّلاثاء",
