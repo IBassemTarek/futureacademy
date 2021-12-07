@@ -37,11 +37,11 @@ class ButtomAction extends StatelessWidget {
               ),
             ],
             borderRadius: buttonType == ButtonType.big
-                ? BorderRadius.only(
+                ? const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
                   )
-                : BorderRadius.all(
+                : const BorderRadius.all(
                     Radius.circular(10),
                   ),
           ),
@@ -50,7 +50,7 @@ class ButtomAction extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .subtitle1
-                ?.copyWith(color: disable ? Colors.white : kGradColor2),
+                ?.copyWith(color: Colors.white),
           ),
         ),
       ),

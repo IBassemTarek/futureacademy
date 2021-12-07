@@ -5,6 +5,7 @@ import 'package:futureacademy/Shared/big_appbar.dart';
 import 'package:futureacademy/Shared/buttom_action.dart';
 import 'package:futureacademy/Shared/group_card.dart';
 import 'package:futureacademy/Shared/loading.dart';
+import 'package:futureacademy/services/auth_services.dart';
 import 'package:futureacademy/services/groups_services.dart';
 import 'package:provider/provider.dart';
 
@@ -25,12 +26,19 @@ class HomePage extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10)),
           color: Colors.white,
         ),
-        height: 0.13392857 * _height,
-        width: 0.90338 * _width,
+        height: _height,
+        width: _width,
         child: const Loading(),
       );
     } else {
       return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            AuthService().signOut();
+          },
+          child: const Icon(Icons.logout_sharp),
+          backgroundColor: kAccentColor2,
+        ),
         body: FutureBuilder(
           future: GroupsDataBaseServices().checkIfEmpty(),
           builder: (_, __) => Scaffold(
@@ -43,43 +51,40 @@ class HomePage extends StatelessWidget {
               },
               title: "إضافة مجموعة",
             ),
-            body: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const BigAppBar(
-                      userName: 'مدير',
-                    ),
-                    ListView.separated(
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: _width * 0.045,
-                            vertical: _width * 0.045),
-                        shrinkWrap: true,
-                        itemBuilder: (context, i) {
-                          return InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => GroupPage(
-                                    group: _groups[i],
-                                  ),
+            body: SingleChildScrollView(
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const BigAppBar(
+                    userName: 'كابتن السقا',
+                  ),
+                  ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: _width * 0.045, vertical: _width * 0.045),
+                      shrinkWrap: true,
+                      itemBuilder: (context, i) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => GroupPage(
+                                  group: _groups[i],
                                 ),
-                              );
-                            },
-                            child: GroupCard(
-                              group: _groups[i],
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, i) => Container(
-                              height: _height * 0.02,
-                            ),
-                        itemCount: _groups.length),
-                  ],
-                ),
+                              ),
+                            );
+                          },
+                          child: GroupCard(
+                            group: _groups[i],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, i) => Container(
+                            height: _height * 0.02,
+                          ),
+                      itemCount: _groups.length),
+                ],
               ),
             ),
           ),

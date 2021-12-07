@@ -68,108 +68,106 @@ class AddNewStudent extends StatelessWidget {
         },
         title: "حفظ",
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              const SmallAppBar(
-                title: "إضافة طالب جديد",
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: _width * 0.06, vertical: _width * 0.045),
-                child: Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: Form(
-                    key: _globalKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'المعلموات الأساسية',
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1
-                              ?.copyWith(color: kHintColor, fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: _height * 0.02,
-                        ),
-                        CustomTextField(
-                          lableText: 'إسم الطالب',
-                          hintText: "محمد احمد",
-                          onClick: (value) {
-                            _studentName = value!;
-                          },
-                        ),
-                        SizedBox(
-                          height: _height * 0.01,
-                        ),
-                        CustomTextField(
-                          lableText: 'السن',
-                          hintText: "13",
-                          textInputType: TextInputType.number,
-                          onClick: (value) {
-                            _studentAge = int.parse(value!);
-                          },
-                        ),
-                        SizedBox(
-                          height: _height * 0.01,
-                        ),
-                        CustomTextField(
-                          lableText: 'رقم الهاتف',
-                          hintText: "01xxxxxxxxx",
-                          textInputType: TextInputType.phone,
-                          onClick: (value) {
-                            _studentNumber = value!;
-                          },
-                        ),
-                        SizedBox(
-                          height: _height * 0.01,
-                        ),
-                        CustomTextField(
-                          lableText: 'العنوان',
-                          hintText: "ش محرم بك - الأسكندرية",
-                          onClick: (value) {
-                            _studentAddress = value!;
-                          },
-                        ),
-                        SizedBox(
-                          height: _height * 0.04,
-                        ),
-                        Text(
-                          'بيانات المرور',
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1
-                              ?.copyWith(color: kHintColor, fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: _height * 0.01,
-                        ),
-                        CustomTextField(
-                          lableText: 'الإيميل',
-                          hintText: "futureacademy@gmail.com",
-                          onClick: (value) {
-                            _studentEmail = value!;
-                          },
-                        ),
-                        CustomTextField(
-                          lableText: 'كلمة السر',
-                          hintText: "Ss@21062020",
-                          onClick: (value) {
-                            _studentPassword = value!;
-                          },
-                        ),
-                      ],
-                    ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            const SmallAppBar(
+              title: "إضافة طالب جديد",
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: _width * 0.06, vertical: _width * 0.045),
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Form(
+                  key: _globalKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'المعلموات الأساسية',
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1
+                            ?.copyWith(color: kHintColor, fontSize: 16),
+                      ),
+                      SizedBox(
+                        height: _height * 0.02,
+                      ),
+                      CustomTextField(
+                        lableText: 'إسم الطالب',
+                        hintText: "محمد احمد",
+                        onClick: (value) {
+                          _studentName = value!;
+                        },
+                      ),
+                      SizedBox(
+                        height: _height * 0.01,
+                      ),
+                      CustomTextField(
+                        lableText: 'السن',
+                        hintText: "13",
+                        textInputType: TextInputType.number,
+                        onClick: (value) {
+                          _studentAge = int.parse(value!);
+                        },
+                      ),
+                      SizedBox(
+                        height: _height * 0.01,
+                      ),
+                      CustomTextField(
+                        lableText: 'رقم الهاتف',
+                        hintText: "01xxxxxxxxx",
+                        textInputType: TextInputType.phone,
+                        onClick: (value) {
+                          _studentNumber = value!;
+                        },
+                      ),
+                      SizedBox(
+                        height: _height * 0.01,
+                      ),
+                      CustomTextField(
+                        lableText: 'العنوان',
+                        hintText: "ش محرم بك - الأسكندرية",
+                        onClick: (value) {
+                          _studentAddress = value!;
+                        },
+                      ),
+                      SizedBox(
+                        height: _height * 0.04,
+                      ),
+                      Text(
+                        'بيانات المرور',
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1
+                            ?.copyWith(color: kHintColor, fontSize: 16),
+                      ),
+                      SizedBox(
+                        height: _height * 0.01,
+                      ),
+                      CustomTextField(
+                        lableText: 'الإيميل',
+                        hintText: "futureacademy@gmail.com",
+                        onClick: (value) {
+                          _studentEmail = value!;
+                        },
+                      ),
+                      CustomTextField(
+                        lableText: 'كلمة السر',
+                        hintText: "Ss@21062020",
+                        onClick: (value) {
+                          _studentPassword = value!;
+                        },
+                      ),
+                    ],
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 const Color kBackgroundColor = Color(0xFFF2F2F2);
 
-const Color kAccentColor = Color(0xFFFAE4D9);
-const Color kAccentColor2 = Color(0xFF8AC6D1);
-const Color kAccentColor3 = Color(0xFFBBDED7);
-const Color kAccentColor4 = Color(0xFFFEB6B9);
+const Color kAccentColor = Color(0xFFFAE3D9);
+const Color kAccentColor2 = Color(0xFFF5725E);
+const Color kAccentColor3 = Color(0xFFFFB6B9);
+const Color kAccentColor4 = Color(0xFFFFDC8B);
 
 const Color kTextColor = Color(0xFF222222);
 const Color kGradColor1 = Color(0xFF671D89);

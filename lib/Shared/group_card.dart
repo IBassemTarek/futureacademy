@@ -40,7 +40,7 @@ class GroupCard extends StatelessWidget {
                   Icon(
                     departmentIcons[group.department],
                     size: 25,
-                    color: kGradColor1,
+                    color: kAccentColor2,
                   ),
                   SizedBox(
                     width: _width * 0.03,

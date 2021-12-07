@@ -30,8 +30,8 @@ class AttendeesPage extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   color: Colors.white,
                 ),
-                height: 0.13392857 * _height,
-                width: 0.90338 * _width,
+                height: _height,
+                width: _width,
                 child: const Loading(),
               );
             } else {
@@ -80,90 +80,87 @@ class AttendeesPage extends StatelessWidget {
                     title: "تأكيد",
                   ),
                 ),
-                body: SafeArea(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const SmallAppBar(
-                          title: 'حضور المجموعة',
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: _width * 0.06,
-                              vertical: _width * 0.045),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'كشف حضور يوم ${daysNames[DateTime.fromMicrosecondsSinceEpoch(date.microsecondsSinceEpoch).weekday - 1]}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1
-                                    ?.copyWith(color: kHintColor, fontSize: 16),
-                              ),
-                              SizedBox(
-                                height: _height * 0.02,
-                              ),
-                              StatefulBuilder(
-                                builder: (context, setState) =>
-                                    ListView.separated(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemBuilder: (context, i) {
-                                          return InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                activeStudents.contains(
-                                                        snapshot.data![i].id)
-                                                    ? activeStudents.remove(
-                                                        snapshot.data![i].id)
-                                                    : activeStudents.add(
-                                                        snapshot.data![i].id);
-                                              });
-                                            },
-                                            child: Directionality(
-                                              textDirection: TextDirection.rtl,
-                                              child: Row(
-                                                children: [
-                                                  Icon(
-                                                    activeStudents.contains(
-                                                            snapshot
-                                                                .data![i].id)
-                                                        ? Icons.check_box
-                                                        : Icons
-                                                            .check_box_outline_blank,
-                                                    color: kAccentColor2,
-                                                    size: 25,
-                                                  ),
-                                                  SizedBox(
-                                                    width: _width * 0.03,
-                                                  ),
-                                                  Text(
-                                                    snapshot.data![i].name,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline1
-                                                        ?.copyWith(
-                                                            fontSize: 16),
-                                                  ),
-                                                ],
-                                              ),
+                body: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SmallAppBar(
+                        title: 'حضور المجموعة',
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: _width * 0.06,
+                            vertical: _width * 0.045),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'كشف حضور يوم ${daysNames[DateTime.fromMicrosecondsSinceEpoch(date.microsecondsSinceEpoch).weekday - 1]}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  ?.copyWith(color: kHintColor, fontSize: 16),
+                            ),
+                            SizedBox(
+                              height: _height * 0.02,
+                            ),
+                            StatefulBuilder(
+                              builder: (context, setState) =>
+                                  ListView.separated(
+                                      padding: const EdgeInsets.all(0),
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, i) {
+                                        return InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              activeStudents.contains(
+                                                      snapshot.data![i].id)
+                                                  ? activeStudents.remove(
+                                                      snapshot.data![i].id)
+                                                  : activeStudents.add(
+                                                      snapshot.data![i].id);
+                                            });
+                                          },
+                                          child: Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  activeStudents.contains(
+                                                          snapshot.data![i].id)
+                                                      ? Icons.check_box
+                                                      : Icons
+                                                          .check_box_outline_blank,
+                                                  color: kAccentColor2,
+                                                  size: 25,
+                                                ),
+                                                SizedBox(
+                                                  width: _width * 0.03,
+                                                ),
+                                                Text(
+                                                  snapshot.data![i].name,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline1
+                                                      ?.copyWith(fontSize: 16),
+                                                ),
+                                              ],
                                             ),
-                                          );
-                                        },
-                                        separatorBuilder: (context, i) =>
-                                            Container(
-                                              height: _height * 0.02,
-                                            ),
-                                        itemCount: snapshot.data!.length),
-                              ),
-                            ],
-                          ),
+                                          ),
+                                        );
+                                      },
+                                      separatorBuilder: (context, i) =>
+                                          Container(
+                                            height: _height * 0.02,
+                                          ),
+                                      itemCount: snapshot.data!.length),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               );

@@ -29,6 +29,7 @@ class SignIn extends StatelessWidget {
           return Form(
             key: _globalKey,
             child: ListView(
+              padding: const EdgeInsets.all(0),
               children: [
                 Container(
                   height: 0.43998 * _height,
@@ -58,34 +59,29 @@ class SignIn extends StatelessWidget {
                         width: 0.4589372 * _width,
                       ),
                       SizedBox(
-                        height: _height * 0.046875,
+                        height: _height * 0.016875,
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: _width * 0.1207721,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Hello",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline1
-                                      ?.copyWith(
-                                          color: kBackgroundColor,
-                                          fontSize: 36)),
-                              SizedBox(
-                                height: _height * 0.02232143,
-                              ),
-                              Text("Sign In to your account",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.copyWith(color: kBackgroundColor)),
-                            ],
-                          )
-                        ],
+                      Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("مرحبا",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1
+                                    ?.copyWith(
+                                        color: kBackgroundColor, fontSize: 36)),
+                            SizedBox(
+                              height: _height * 0.02232143,
+                            ),
+                            Text("قم بتسحيل دخولك بالبريد الإليكتروني",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(color: kBackgroundColor)),
+                          ],
+                        ),
                       )
                     ],
                   ),
@@ -98,7 +94,7 @@ class SignIn extends StatelessWidget {
                   width: _width * 0.758454,
                   //  height: 0.068080*_height,
                   child: CustomTextField(
-                    lableText: 'Email address',
+                    lableText: 'البريد الايكتروني',
                     hintText: "info@futureacademy.com",
                     onClick: (value) {
                       _email = value!;
@@ -113,7 +109,7 @@ class SignIn extends StatelessWidget {
                   width: _width * 0.758454,
                   //  height: 0.068080*_height,
                   child: CustomTextField(
-                    lableText: 'Password',
+                    lableText: 'كلمة السر',
                     hintText: "Ss@21062020",
                     onClick: (value) {
                       _password = value!;
@@ -125,8 +121,7 @@ class SignIn extends StatelessWidget {
                 ),
                 Builder(
                   builder: (context) => Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 0.290773 * _width),
+                    padding: EdgeInsets.symmetric(horizontal: 0.2 * _width),
                     child: InkWell(
                       onTap: () async {
                         _validate(context);
@@ -139,7 +134,7 @@ class SignIn extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(30)),
                           color: kTextColor,
                         ),
-                        child: Text('Login',
+                        child: Text('تسجيل دخول',
                             style: Theme.of(context)
                                 .textTheme
                                 .headline1

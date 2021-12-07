@@ -31,12 +31,13 @@ class StudentPage extends StatelessWidget {
           builder: (_, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               return Container(
+                alignment: Alignment.center,
+                height: _height,
+                width: _width,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   color: Colors.white,
                 ),
-                height: 0.13392857 * _height,
-                width: 0.90338 * _width,
                 child: const Loading(),
               );
             } else {
@@ -76,129 +77,125 @@ class StudentPage extends StatelessWidget {
                   },
                   title: "إضافة طالب",
                 ),
-                body: SafeArea(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const SmallAppBar(
-                          title: 'طلاب المجموعة',
-                        ),
-                        ListView.separated(
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: _width * 0.045,
-                                vertical: _width * 0.045),
-                            shrinkWrap: true,
-                            itemBuilder: (context, i) {
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => MultiProvider(
-                                        providers: [
-                                          StreamProvider<
-                                              List<GroupsModel>>.value(
-                                            value: GroupsDataBaseServices()
-                                                .groupsCardsData,
-                                            initialData: const [],
-                                          ),
-                                        ],
-                                        child: EditStudentPage(
-                                          groupid: group.id,
-                                          studentData: snapshot.data![i],
+                body: SingleChildScrollView(
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const SmallAppBar(
+                        title: 'طلاب المجموعة',
+                      ),
+                      ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: _width * 0.045,
+                              vertical: _width * 0.045),
+                          shrinkWrap: true,
+                          itemBuilder: (context, i) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MultiProvider(
+                                      providers: [
+                                        StreamProvider<List<GroupsModel>>.value(
+                                          value: GroupsDataBaseServices()
+                                              .groupsCardsData,
+                                          initialData: const [],
                                         ),
+                                      ],
+                                      child: EditStudentPage(
+                                        groupid: group.id,
+                                        studentData: snapshot.data![i],
                                       ),
                                     ),
-                                  );
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: kShadowColor,
-                                          spreadRadius: 2,
-                                          blurRadius: 10,
-                                          offset: Offset(0,
-                                              5), // changes position of shadow
-                                        ),
-                                      ],
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: _width * 0.03,
-                                      vertical: _height * 0.03),
-                                  child: Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.person,
-                                              color: kGradColor1,
-                                              size: 25,
-                                            ),
-                                            SizedBox(
-                                              width: _width * 0.03,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  snapshot.data![i].name,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline1
-                                                      ?.copyWith(fontSize: 16),
-                                                ),
-                                                SizedBox(
-                                                  height: _height * 0.01,
-                                                ),
-                                                Text(
-                                                  snapshot
-                                                      .data![i].mobileNumber,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1
-                                                      ?.copyWith(
-                                                          color: Colors.black
-                                                              .withOpacity(0.5),
-                                                          fontSize: 14),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                          snapshot.data![i].currentMonthAtt
-                                                  .toString() +
-                                              '/' +
-                                              group.dates.length.toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1
-                                              ?.copyWith(
-                                                  color: kHintColor,
-                                                  fontSize: 14),
-                                        ),
-                                      ],
-                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: kShadowColor,
+                                        spreadRadius: 2,
+                                        blurRadius: 10,
+                                        offset: Offset(
+                                            0, 5), // changes position of shadow
+                                      ),
+                                    ],
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10)),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: _width * 0.03,
+                                    vertical: _height * 0.03),
+                                child: Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.person,
+                                            color: kAccentColor2,
+                                            size: 25,
+                                          ),
+                                          SizedBox(
+                                            width: _width * 0.03,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                snapshot.data![i].name,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline1
+                                                    ?.copyWith(fontSize: 16),
+                                              ),
+                                              SizedBox(
+                                                height: _height * 0.01,
+                                              ),
+                                              Text(
+                                                snapshot.data![i].mobileNumber,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1
+                                                    ?.copyWith(
+                                                        color: Colors.black
+                                                            .withOpacity(0.5),
+                                                        fontSize: 14),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Text(
+                                        snapshot.data![i].currentMonthAtt
+                                                .toString() +
+                                            '/' +
+                                            group.dates.length.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            ?.copyWith(
+                                                color: kHintColor,
+                                                fontSize: 14),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              );
-                            },
-                            separatorBuilder: (context, i) => Container(
-                                  height: _height * 0.02,
-                                ),
-                            itemCount: snapshot.data!.length),
-                      ],
-                    ),
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, i) => Container(
+                                height: _height * 0.02,
+                              ),
+                          itemCount: snapshot.data!.length),
+                    ],
                   ),
                 ),
               );

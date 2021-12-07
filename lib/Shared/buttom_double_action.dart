@@ -39,7 +39,7 @@ class ButtomDoubleAction extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .subtitle1
-                  ?.copyWith(color: disable ? Colors.white : kGradColor2),
+                  ?.copyWith(color: Colors.white),
             ),
           ),
         ),
@@ -64,7 +64,7 @@ class ButtomDoubleAction extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .subtitle1
-                  ?.copyWith(color: disable ? Colors.white : kGradColor2),
+                  ?.copyWith(color: Colors.white),
             ),
           ),
         ),
