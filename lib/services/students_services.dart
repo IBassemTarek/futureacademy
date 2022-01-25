@@ -5,6 +5,9 @@ import 'package:futureacademy/Models/student_model.dart';
 class StudentsDataBaseServices {
   final CollectionReference studentsCard =
       FirebaseFirestore.instance.collection('studentsData');
+  CollectionReference studentPayment({required String uid}) {
+    return studentsCard.doc(uid).collection('payment');
+  }
 
   Future deletestudentsCard({required String uid}) {
     return studentsCard.doc(uid).delete();
@@ -202,6 +205,46 @@ class StudentsDataBaseServices {
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Failed to add note: $error"),
+      ));
+      // ignore: avoid_print
+      print("Failed to add note: $error");
+    });
+  }
+
+  Future addStudentPayment(
+      {required String uid,
+      required int cost,
+      required Timestamp date,
+      required BuildContext context}) async {
+    return await studentPayment(uid: uid).add({
+      'cost': cost,
+      'date': date,
+    }).then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("note added"),
+      ));
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Failed to add note: $error"),
+      ));
+      // ignore: avoid_print
+      print("Failed to add note: $error");
+    });
+  }
+
+  Future<List<StudentsPayment>> getStudentPayment(
+      {required String uid, required BuildContext context}) async {
+    return await studentPayment(uid: uid)
+        .get()
+        .then((query) => query.docs.map((doc) {
+              return StudentsPayment(
+                amount: doc.get("cost"),
+                date: doc.get("date"),
+              );
+            }).toList())
+        .catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Failed to read note: $error"),
       ));
       // ignore: avoid_print
       print("Failed to add note: $error");

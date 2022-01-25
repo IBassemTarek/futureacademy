@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class StudentsModel {
   final String address;
   final int age;
@@ -23,5 +25,14 @@ class StudentsModel {
     required this.mobileNumber,
     required this.name,
     required this.notes,
+  });
+}
+
+class StudentsPayment {
+  final int amount;
+  final Timestamp date;
+  StudentsPayment({
+    required this.amount,
+    required this.date,
   });
 }

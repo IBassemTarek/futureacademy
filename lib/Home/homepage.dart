@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:futureacademy/FeedbackPage/feedback_page.dart';
 import 'package:futureacademy/GroupPage/grouppage.dart';
+import 'package:futureacademy/Models/feedback_model.dart';
 import 'package:futureacademy/Models/group_model.dart';
+import 'package:futureacademy/Models/student_model.dart';
 import 'package:futureacademy/Shared/big_appbar.dart';
-import 'package:futureacademy/Shared/buttom_action.dart';
+import 'package:futureacademy/Shared/buttom_double_action.dart';
 import 'package:futureacademy/Shared/group_card.dart';
 import 'package:futureacademy/Shared/loading.dart';
 import 'package:futureacademy/services/auth_services.dart';
+import 'package:futureacademy/services/feedback_services.dart';
 import 'package:futureacademy/services/groups_services.dart';
+import 'package:futureacademy/services/students_services.dart';
 import 'package:provider/provider.dart';
 
 import '../const.dart';
@@ -34,22 +39,39 @@ class HomePage extends StatelessWidget {
       return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            AuthService().signOut();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MultiProvider(providers: [
+                  StreamProvider<List<FeedbackModel>>.value(
+                    value: FeedbackDataBaseServices().feedbacksCardsData,
+                    initialData: const [],
+                  ),
+                  StreamProvider<List<StudentsModel>>.value(
+                    value: StudentsDataBaseServices().studentsCardsData,
+                    initialData: const [],
+                  ),
+                ], child: const FeedbackPage()),
+              ),
+            );
           },
-          child: const Icon(Icons.logout_sharp),
+          child: const Icon(Icons.feedback),
           backgroundColor: kAccentColor2,
         ),
         body: FutureBuilder(
           future: GroupsDataBaseServices().checkIfEmpty(),
           builder: (_, __) => Scaffold(
             backgroundColor: kBackgroundColor,
-            bottomNavigationBar: ButtomAction(
-              buttonType: ButtonType.big,
+            bottomNavigationBar: ButtomDoubleAction(
+              onTap2: () {
+                AuthService().signOut();
+              },
+              title: "إضافة مجموعة",
               disable: false,
               onTap: () {
                 makeNewGroup(context);
               },
-              title: "إضافة مجموعة",
+              title2: "خروج",
             ),
             body: SingleChildScrollView(
               child: Column(

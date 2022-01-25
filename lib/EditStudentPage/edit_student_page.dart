@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:futureacademy/Models/group_model.dart';
 import 'package:futureacademy/Models/student_model.dart';
@@ -29,6 +30,7 @@ class EditStudentPage extends StatelessWidget {
   late String _studentName = studentData.name;
   late String _studentLocation = studentData.address;
   late String _studentAddNotes = '';
+  late int _studentAmount = 0;
   late String _studentNumber = studentData.mobileNumber;
   late String _studentAge = studentData.age.toString();
   late String _studentGroup = studentData.group;
@@ -465,7 +467,209 @@ class EditStudentPage extends StatelessWidget {
                                   : const SizedBox(
                                       height: 0,
                                       width: 0,
-                                    )
+                                    ),
+                              SizedBox(
+                                height: _height * 0.03,
+                              ),
+                              Text(
+                                'المدفوعات ',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    ?.copyWith(color: kHintColor, fontSize: 16),
+                              ),
+                              SizedBox(
+                                height: _height * 0.01,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: _width * 0.6,
+                                    child: CustomTextField(
+                                      lableText: 'إضافة المبلغ',
+                                      hintText: "أضف المبلغ",
+                                      textInputType: TextInputType.number,
+                                      onClick: (value) {
+                                        _studentAmount = int.parse(value!);
+                                      },
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      if (_studentAmount != 0) {
+                                        Timestamp myTimeStamp =
+                                            Timestamp.fromDate(DateTime.now());
+                                        StudentsDataBaseServices()
+                                            .addStudentPayment(
+                                          uid: studentData.id,
+                                          cost: _studentAmount,
+                                          date: myTimeStamp,
+                                          context: context,
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                          content: Text("برجاء كتابة المبلغ"),
+                                        ));
+                                      }
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.topCenter,
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: _width * 0.03,
+                                        horizontal: _width * 0.03,
+                                      ),
+                                      margin: const EdgeInsets.only(right: 20),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.blue,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)),
+                                      ),
+                                      child: Text(
+                                        "إضافة",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1
+                                            ?.copyWith(color: kBackgroundColor),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: _height * 0.03,
+                              ),
+                              FutureBuilder<List<StudentsPayment>>(
+                                  future: StudentsDataBaseServices()
+                                      .getStudentPayment(
+                                          uid: studentData.id,
+                                          context: context),
+                                  builder: (_, snapshot) {
+                                    if (snapshot.connectionState !=
+                                        ConnectionState.done) {
+                                      return Container(
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          color: Colors.white,
+                                        ),
+                                        height: 0.13392857 * _height,
+                                        width: 0.90338 * _width,
+                                        child: const Loading(),
+                                      );
+                                    } else {
+                                      return Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'المدفوعات السابقة',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1
+                                                  ?.copyWith(
+                                                      color: kHintColor,
+                                                      fontSize: 16),
+                                            ),
+                                            SizedBox(
+                                              height: _height * 0.03,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: _height * 0.03),
+                                              decoration: BoxDecoration(
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                      color: kShadowColor,
+                                                      spreadRadius: 5,
+                                                      blurRadius: 7,
+                                                      offset: Offset(0,
+                                                          3), // changes position of shadow
+                                                    ),
+                                                  ],
+                                                  color: kBackgroundColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: snapshot.data!
+                                                    .map(
+                                                      (e) => Container(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: _width *
+                                                                    0.03),
+                                                        alignment: Alignment
+                                                            .centerRight,
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                            bottom:
+                                                                _width * 0.01,
+                                                            left: _width * 0.04,
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  const Icon(
+                                                                    Icons
+                                                                        .circle,
+                                                                    size: 12,
+                                                                    color:
+                                                                        kGradColor2,
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width:
+                                                                        _width *
+                                                                            0.02,
+                                                                  ),
+                                                                  Text(
+                                                                    e.amount
+                                                                        .toString(),
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .subtitle1
+                                                                        ?.copyWith(
+                                                                            color:
+                                                                                kHintColor,
+                                                                            fontSize:
+                                                                                16),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              Text(
+                                                                " ${e.date.toDate().day} / ${e.date.toDate().month} / ${e.date.toDate().year}",
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .subtitle1
+                                                                    ?.copyWith(
+                                                                        color:
+                                                                            kHintColor,
+                                                                        fontSize:
+                                                                            16),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                    .toList(),
+                                              ),
+                                            ),
+                                          ]);
+                                    }
+                                  })
                             ],
                           ),
                         ),
@@ -476,7 +680,6 @@ class EditStudentPage extends StatelessWidget {
               ),
             );
           }
-          ;
         });
   }
 }
