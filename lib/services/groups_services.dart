@@ -13,6 +13,7 @@ class GroupsDataBaseServices {
   Future<bool> checkIfEmpty() async {
     final snapshot = groupsCard.snapshots();
     bool x = await snapshot.isEmpty;
+    print(x);
     if (x) {
       return true;
     } else {

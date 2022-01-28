@@ -57,8 +57,8 @@ class EditStudentPage extends StatelessWidget {
 
     return FutureBuilder(
         future: GroupsDataBaseServices().checkIfEmpty(),
-        builder: (_, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done &&
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done ||
               snapshot.data == true) {
             return Container(
               decoration: const BoxDecoration(
@@ -117,7 +117,6 @@ class EditStudentPage extends StatelessWidget {
                       id: _studentOldGroupId,
                       studentsID: oldGroup.studentsID,
                     );
-                    print('removed');
 
                     //add
                     newGroup.studentsID.add(studentData.id);
@@ -126,7 +125,9 @@ class EditStudentPage extends StatelessWidget {
                       id: _studentGroup,
                       studentsID: newGroup.studentsID,
                     );
-                    print('added');
+                    // formateStudentHistory
+                    await StudentsDataBaseServices().formateStudentDates(
+                        context: context, uid: studentData.id);
                   } else {
                     print('no operation');
                   }

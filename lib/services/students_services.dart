@@ -49,6 +49,7 @@ class StudentsDataBaseServices {
         "evaluation": evaluation,
         "group": group,
       });
+      // await studentPayment(uid:uid , )
     } else {
       final DocumentReference documentReference = studentsCard.doc(uid);
       return await documentReference.set({
@@ -87,6 +88,22 @@ class StudentsDataBaseServices {
   // define a stream of data that give response when user login or logout
   Stream<List<StudentsModel>> get studentsCardsData {
     return studentsCard.snapshots().map(_studentsModelListSnapShot);
+  }
+
+  Future formateStudentDates(
+      {required String uid, required BuildContext context}) async {
+    return await studentsCard.doc(uid).update(
+        {'id': uid, 'attHistory': [], "currentMonthAtt": 0}).then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("student updated"),
+      ));
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Failed to update student: $error"),
+      ));
+      // ignore: avoid_print
+      print("Failed to update student: $error");
+    });
   }
 
   Future updateStudentInfo(
